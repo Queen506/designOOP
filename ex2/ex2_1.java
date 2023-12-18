@@ -1,9 +1,9 @@
 package ex2;
 
-import java.util.Scanner;
-import java.util.List;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
+import java.util.Scanner;
 
 public class ex2_1 {
     public static final int MAX = 5;
@@ -11,54 +11,57 @@ public class ex2_1 {
     public static void main(String[] args) {
         System.out.println("Welcome to the Application!");
 
+        List<Integer> nums = getUserInput();
+        nums = filterValidInput(nums);
+        nums = sortNumbers(nums);
+        displaySortedNumbers(nums);
+    }
+
+    public static List<Integer> getUserInput() {
+        Scanner inp = new Scanner(System.in);
         List<Integer> nums = new ArrayList<>();
 
         System.out.println("Enter 5 valid integers in the range [0, 10]");
 
-        readAndValidateInput(nums);
-        displaySortedNumbers(nums);
-    }
-
-    private static void readAndValidateInput(List<Integer> nums) {
-        Scanner inp = new Scanner(System.in);
-
         while (nums.size() < MAX) {
-            String input = getInput(inp);
-            validateAndAddNumber(input, nums);
-        }
+            String s = inp.nextLine();
 
-        inp.close();
-    }
-
-    private static String getInput(Scanner inp) {
-        return inp.nextLine();
-    }
-
-    private static void validateAndAddNumber(String input, List<Integer> nums) {
-        try {
-            int num = Integer.parseInt(input);
-
-            if (isValidNumber(num)) {
+            try {
+                int num = Integer.parseInt(s);
                 nums.add(num);
-            } else {
-                System.out.println("Invalid range! Try again!");
+            } catch (NumberFormatException nfe) {
+                System.out.println("Invalid! Try again!");
             }
-        } catch (NumberFormatException nfe) {
-            System.out.println("Invalid! Try again!");
         }
+        inp.close();
+        return nums;
     }
 
-    private static boolean isValidNumber(int num) {
+    public static List<Integer> filterValidInput(List<Integer> nums) {
+        List<Integer> validInput = new ArrayList<>();
+        for (int num : nums) {
+            if (isValidInput(num)) {
+                validInput.add(num);
+            } else {
+                System.out.println("Invalid range! Number " + num + " will be excluded.");
+            }
+        }
+        return validInput;
+    }
+
+    public static boolean isValidInput(int num) {
         return num >= 0 && num <= 10;
     }
 
-    private static void displaySortedNumbers(List<Integer> nums) {
-        sortAndDisplay(nums);
+    public static List<Integer> sortNumbers(List<Integer> nums) {
+        Collections.sort(nums);
+        return nums;
     }
 
-    private static void sortAndDisplay(List<Integer> nums) {
-        Collections.sort(nums);
-        for (int num : nums)
+    public static void displaySortedNumbers(List<Integer> nums) {
+        System.out.println("Sorted numbers:");
+        for (int num : nums) {
             System.out.print(num + " ");
+        }
     }
 }

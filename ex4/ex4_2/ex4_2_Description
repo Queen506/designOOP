@@ -1,0 +1,4 @@
+ใช้ abstract factory pattern ฝั่งproductมี IMail IBrochure ซึ่งแต่ละอันจะมี Regular Mountain Delinquent
+มีฝั่ง factory ที่มี ICustomerFactory มี 2 method createMail และ createBrochure
+ และมี RegularFactory MountainFactory DelinquentFactory ที่จะสร้างmail brochureตามแบบ 
+ ซึ่งมีการใช้Singleton ทำให้เรียกใช้DelinquentFactory.getFactory() MountainFactory.getFactory() DelinquentFactory.getFactory() ได้โดยไม่ต้องnew
